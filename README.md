@@ -6,7 +6,9 @@ A [workflowr][] project.
 
 # Notes:
 
-These notes are largely from [Getting started with workflowr]: https://cran.r-project.org/web/packages/workflowr/vignettes/wflow-01-getting-started.html
+These notes are largely from [Getting started with workflowr][].
+
+[Getting started with workflowr]: https://cran.r-project.org/web/packages/workflowr/vignettes/wflow-01-getting-started.html
 
 - The two required subdirectories are `analysis/` and `docs/`. These directories should never be removed from the workflowr project.
 - `analysis/`: This directory contains all the source R Markdown files for implementing the data analyses for your project. It also contains a special R Markdown file, index.Rmd, that does not contain any R code, but will be used to generate index.html, the homepage for your website.
