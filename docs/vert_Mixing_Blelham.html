@@ -476,16 +476,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomscmc72vertMixingworkFlowtreed5fe2c9924d532fdc4cdb5d3c0fd279a086e1e38targetblankd5fe2c9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/scmc72/vertMixing_workFlow/tree/d5fe2c9924d532fdc4cdb5d3c0fd279a086e1e38" target="_blank">d5fe2c9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomscmc72vertMixingworkFlowtree8f17f019f7820ee54972bc13efa1ac1825433e16targetblank8f17f01a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/scmc72/vertMixing_workFlow/tree/8f17f019f7820ee54972bc13efa1ac1825433e16" target="_blank">8f17f01</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomscmc72vertMixingworkFlowtreed5fe2c9924d532fdc4cdb5d3c0fd279a086e1e38targetblankd5fe2c9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomscmc72vertMixingworkFlowtree8f17f019f7820ee54972bc13efa1ac1825433e16targetblank8f17f01a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/scmc72/vertMixing_workFlow/tree/d5fe2c9924d532fdc4cdb5d3c0fd279a086e1e38" target="_blank">d5fe2c9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/scmc72/vertMixing_workFlow/tree/8f17f019f7820ee54972bc13efa1ac1825433e16" target="_blank">8f17f01</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -499,13 +499,6 @@ Ignored files:
     Ignored:    data/WT_total.csv
     Ignored:    data/bathy.csv
     Ignored:    data/blelham_bathy.xlsx
-
-Untracked files:
-    Untracked:  analysis/vert_mixing_functions.R
-
-Unstaged changes:
-    Modified:   .gitignore
-    Modified:   README.md
 
 </code></pre>
 <p>
@@ -549,6 +542,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/scmc72/vertMixing_workFlow/blob/8f17f019f7820ee54972bc13efa1ac1825433e16/analysis/vert_Mixing_Blelham.Rmd" target="_blank">8f17f01</a>
+</td>
+<td>
+Daniel
+</td>
+<td>
+2022-02-03
+</td>
+<td>
+added more Kz calcs from my original code
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/scmc72/vertMixing_workFlow/9f7e7c72ca8cf613065e4fdd5af2eaabbd5ba4be/docs/vert_Mixing_Blelham.html" target="_blank">9f7e7c7</a>
+</td>
+<td>
+Daniel
+</td>
+<td>
+2022-02-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/scmc72/vertMixing_workFlow/blob/d5fe2c9924d532fdc4cdb5d3c0fd279a086e1e38/analysis/vert_Mixing_Blelham.Rmd" target="_blank">d5fe2c9</a>
 </td>
 <td>
@@ -568,16 +595,19 @@ added analysis file with some blelham calculations
 </div>
 </div>
 </div>
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
 <p>Just going to see if I can run some of my vertical mixing code on this website.</p>
 <p>Many of the vertical mixing functions used are defined in <code>analysis/vert_mixing_functions.R</code>. I will try to mention which these are.</p>
 <p>Load functions:</p>
 <pre class="r"><code>source(&#39;analysis/vert_mixing_functions.R&#39;)</code></pre>
-<p>Load in the data! Note that raw data will not be uploaded to Github. However, graphs produced from this data will appear on this website (need to do some thinking about data acknowledgement and licensing as this website is public)</p>
+</div>
+<div id="load-in-the-data" class="section level1">
+<h1>Load in the data</h1>
+<p>Note that raw data will not be uploaded to Github. However, graphs produced from this data will appear on this website (need to do some thinking about data acknowledgement and licensing as this website is public)</p>
 <pre class="r"><code>############## READ DATA ################
 
-waterDF = read.csv(&quot;Data/WT_total.csv&quot;)
+waterDF = read.csv(&quot;data/WT_total.csv&quot;)
 
 waterDF_dt &lt;- waterDF %&gt;%
   mutate(DateTime=dmy_hm(DateTime)) %&gt;%
@@ -634,29 +664,196 @@ names(bathys)[2] = &quot;areas&quot;
 
 # BUT better to use bathymetry file, which is more representative! 
 blelBathy = load.bathy(&quot;Data/bathy.csv&quot;)</code></pre>
+</div>
+<div id="basic-visualisation" class="section level1">
+<h1>Basic visualisation</h1>
 <p>Let’s plot the water temperature profiles for the summer of 2013.</p>
 <pre class="r"><code>wtr.heat.map(subset(wt.weeks, 
                     datetime &lt;=&#39;2013-10-01&#39; &amp; datetime &gt;=&#39;2013-04-01&#39;))</code></pre>
 <p><img src="figure/vert_Mixing_Blelham.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kz-and-heat-flux-calculation" class="section level1">
+<h1>Kz and heat flux calculation</h1>
 <p>Now, we will use my <code>calcKz()</code> function to calculate the vertical diffusivity coefficients for different time averages.</p>
 <p><strong>Note:</strong> It might be a good idea to display some of the <code>calcKz()</code> code, and other key functions somewhere on this website.</p>
 <pre class="r"><code># remember to use a subset of the data if this code needs to be run often
-wt.months.Kz = calcKz(wt.months, blelBathy, Zmax = 14.5)</code></pre>
-<pre><code>Joining, by = &quot;upperZ&quot;</code></pre>
-<pre><code>Joining, by = c(&quot;upperZ&quot;, &quot;datetime&quot;)</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;datetime&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>wt.weeks.Kz = calcKz(wt.weeks, blelBathy, Zmax = 14.5)</code></pre>
-<pre><code>Joining, by = &quot;upperZ&quot;</code></pre>
-<pre><code>Joining, by = c(&quot;upperZ&quot;, &quot;datetime&quot;)</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;datetime&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>wt.days.Kz = calcKz(wt.days, blelBathy, Zmax = 14.5)</code></pre>
-<pre><code>Joining, by = &quot;upperZ&quot;</code></pre>
-<pre><code>Joining, by = c(&quot;upperZ&quot;, &quot;datetime&quot;)</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;datetime&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>wt.3days.Kz = calcKz(wt.3days, blelBathy, Zmax = 14.5)</code></pre>
-<pre><code>Joining, by = &quot;upperZ&quot;</code></pre>
-<pre><code>Joining, by = c(&quot;upperZ&quot;, &quot;datetime&quot;)</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;datetime&#39;. You can override using the `.groups` argument.</code></pre>
+wt.months.Kz = calcKz(wt.months, blelBathy, Zmax = 14.5)
+wt.weeks.Kz = calcKz(wt.weeks, blelBathy, Zmax = 14.5)
+wt.days.Kz = calcKz(wt.days, blelBathy, Zmax = 14.5)
+wt.3days.Kz = calcKz(wt.3days, blelBathy, Zmax = 14.5)</code></pre>
+<p>Can also calculate heatflux:</p>
+<pre class="r"><code>wt.months.heatflux = ts.heat.flux(wt.months.Kz, wt.months, blelBathy, Zmax=14.5)
+wt.weeks.heatflux = ts.heat.flux(wt.weeks.Kz, wt.weeks, blelBathy, Zmax=14.5)
+wt.days.heatflux = ts.heat.flux(wt.days.Kz, wt.days, blelBathy, Zmax=14.5)
+wt.3days.heatflux = ts.heat.flux(wt.3days.Kz, wt.3days, blelBathy, Zmax=14.5)</code></pre>
+</div>
+<div id="calculating-other-important-parameters" class="section level1">
+<h1>Calculating other important parameters</h1>
+<p>For plots it will be nice to display where the metalimnion is and to what depth sunlight will penetrate (euphotic depth)</p>
+<p>Calculate metalimnion depths:</p>
+<pre class="r"><code>################ METALIMNION CALCULATION #####################
+# just using R lake analyser function as is for this calculation
+# could try messing with slope, but I don&#39;t see any reason for this
+# outputs timeseries with columns &#39;top&#39; (top of metalimnion - depth of epilimnion) 
+# and bottom (bottom of metalimnion - start of hypolimnion) 
+meta.months = ts.meta.depths(wt.months)
+meta.weeks = ts.meta.depths(wt.weeks)
+meta.3days = ts.meta.depths(wt.3days)
+meta.days = ts.meta.depths(wt.days)</code></pre>
+<p>Here we load Secchi depth data and then use this to estimate the euphotic depth.</p>
+<p>the light extinction coefficient, <span class="math inline">\(K_d\)</span>, is calculated using the approach from <a href="https://www.tandfonline.com/doi/abs/10.5268/IW-5.2.748">Woolway, 2015</a>:</p>
+<p><span class="math inline">\(K_d = \frac{1.75}{Z_{sd}}\)</span></p>
+<p>, where <span class="math inline">\(Z_{sd}\)</span> is the secchi depth. The light intensity at depth <span class="math inline">\(z\)</span>, <span class="math inline">\(I_z\)</span> is given by:</p>
+<p><span class="math inline">\(I_z = I_0 e^{-K_d z}\)</span></p>
+<p>The euphotic depth is defined as the depth where the light intensity is 1% of the light intensity at the surface. This can be written:</p>
+<p><span class="math inline">\(I_{z_{eu}} = 0.01 I_0\)</span></p>
+<p>therefore, if we insert this into the previous equation and rearrange, we get:</p>
+<p><span class="math inline">\(z_{eu} = \frac{\ln{100}}{K_d}\)</span></p>
+<p>which is used in the code chunk below:</p>
+<pre class="r"><code>############## LOAD SECCHI DEPTH DATA #####################
+# want to load secchi depth data and calc euphotic depth from this
+secchi_DF = read.csv(&quot;Data/BLEL_Secchi.csv&quot;)
+
+############### EUPHOTIC DEPTH CALCULATION ##################
+secchi_DF_Kd &lt;- secchi_DF %&gt;%
+  mutate(Date=dmy(Date)) %&gt;%
+  rename(datetime=Date) %&gt;% # convert dates to datetime type
+  # calc Kd (light extinction coeff) using formula from Woolway, 2015
+  mutate(Kd=1.75/Secchidepth) %&gt;%
+  # calc euphotic depth, the way it works is as follows:
+  # I(z) = I(0) exp(-Kd z)
+  # I(z_eup) = 0.01I(0)
+  # so, ln(0.01I(0)) = ln(I(0)) - Kd z_eup
+  # then rearrange to get, z_eup = ln100 / Kd
+  mutate(euphoticDepth=log(100)/Kd)
+
+############# RESAMPLE SECCHI DEPTH DATA ###################
+secchi.days = upsample_ts(secchi_DF_Kd, period=&#39;1 day&#39;)
+secchi.3days = upsample_ts(secchi_DF_Kd, period=&#39;3 day&#39;, start = &#39;2016-05-04&#39;)
+secchi.weeks = upsample_ts(secchi_DF_Kd, period = &#39;1 week&#39;, start=&#39;2016-05-09&#39;)
+# better to use time_avg for months as it will allow for starting on 2015-05-01
+secchi.months = time_avg(secchi_DF_Kd, period = &#39;1 month&#39;)</code></pre>
+</div>
+<div id="plotting" class="section level1">
+<h1>Plotting</h1>
+<p>Seeing as we’ll do this a few times, here is a function to plot <span class="math inline">\(K_z\)</span>. It does a bunch of clever stuff and can even plot lines for the thermocline etc!</p>
+<pre class="r"><code>########################## PLOTTING ####################
+# probably need to do weekly or monthly avgs before plotting
+
+plotKz &lt;- function(kzDF_tidy, minDepth=NA, maxDepth=NA,
+                   startDate=NA, endDate=NA,
+                   plot.secchi=TRUE, plot.euphotic=TRUE, 
+                   plot.thermocline=TRUE){
+  # plot Kz graphs for each timestep in kzDF_tidy
+  # inputs:
+  # - kzDF_tidy: dataframe containing Kz values at different depths
+  #              data should be in long format (use pivot_longer_wtrDF)
+  #              needs to have columns: datetime, Kz, depth
+  # - minDepth, maxDepth: min and max depths to include in plot
+  # - startDate, endDate: date range to plot over (eg. startDate = &#39;2013-05-17&#39;)
+  #                       if not specified then plot all dates
+  # - plot.secchi, plot.euphotic, plot.thermocline: 
+  #        booleans to indicate whether to plot horizontal lines for these
+  #        depths (requires these to be included as columns in input dataframe
+  #        called: &#39;Secchidepth&#39;, &#39;euphoticDepth&#39;, &#39;top&#39;, &#39;bottom&#39;)
+  
+  if(is.na(startDate)){
+    startDate = min(kzDF_tidy$datetime)
+  }
+  if(is.na(endDate)){
+    endDate = max(kzDF_tidy$datetime)
+  }
+  if(is.na(minDepth)){
+    minDepth = min(kzDF_tidy$depth)
+  }
+  if(is.na(maxDepth)){
+    maxDepth = max(kzDF_tidy$depth)
+  }
+  # create labels and line colors
+  # (see note further down for how the order of values in labs and colors works)
+  labs = c(&#39;Kz&#39;)
+  colors = c(&#39;#000000&#39;)
+  if(plot.secchi){
+    labs = c(labs, &#39;Secchi Depth&#39;)
+    colors = c(colors, &#39;#31A016&#39;)
+  }
+  if(plot.euphotic){
+    labs = c(labs, &#39;Euphotic Depth&#39;)
+    colors = c(colors, &#39;#E69F00&#39;)
+  }
+  if(plot.thermocline){
+    labs = c(labs, &#39;Top of thermocline&#39;, &#39;Bottom of thermocline&#39;)
+    colors = c(colors, &#39;#E61313&#39;, &#39;#56B4E9&#39;)
+  }
+  
+  kzDF_tidy &lt;- subset(kzDF_tidy, 
+         depth &lt;= maxDepth &amp;
+           depth &gt;= minDepth &amp; 
+           (datetime) &gt;= startDate &amp;
+           (datetime) &lt;= endDate)
+  # for the labels I&#39;ve done something kinda hacky, but it works
+  # basically the order of labels is done alphabetically, so I&#39;ve just set the 
+  # color param col = &#39;a&#39;, &#39;b&#39;, &#39;c&#39; etc. Then I use scale_color_manual to edit 
+  # these labels, and their corresponding colors. the order of the labels just 
+  # needs to match the a, b, c, etc. 
+  ggplot(kzDF_tidy, 
+         aes(x = (Kz), y = depth)) + 
+    geom_path(aes(col=&#39;a&#39;)) +
+    scale_x_log10(#limits = c(10^-4, 10^0), 
+      breaks = trans_breaks(&quot;log10&quot;, function(x) 10^x),
+      labels = trans_format(&quot;log10&quot;, math_format(10^.x))) +
+    scale_y_reverse() +
+    xlab(expression(&quot;Kz (m&quot;^2*&quot;/s)&quot;)) +
+    ylab(&quot;Depth (m)&quot;) +
+    {if(&#39;Secchidepth&#39; %in% colnames(kzDF_tidy) &amp; plot.secchi)
+      geom_hline(data = kzDF_tidy, 
+                 aes(yintercept=Secchidepth, col=&#39;b&#39;))} +
+    {if(&#39;euphoticDepth&#39; %in% colnames(kzDF_tidy) &amp; plot.euphotic)
+      geom_hline(data = kzDF_tidy, 
+                 aes(yintercept=euphoticDepth, col=&#39;c&#39;))} +
+    {if(&#39;top&#39; %in% colnames(kzDF_tidy) &amp; plot.thermocline)
+      geom_hline(data = kzDF_tidy, 
+                 aes(yintercept=top, col=&#39;d&#39;))} +
+    {if(&#39;bottom&#39; %in% colnames(kzDF_tidy) &amp; plot.thermocline)
+      geom_hline(data = kzDF_tidy, 
+                 aes(yintercept=bottom, col=&#39;e&#39;))} +
+      scale_color_manual(name=NULL, values=colors, labels=labs) +
+      facet_wrap(vars(datetime))
+    
+}</code></pre>
+<p>Before plotting, we need to first get into a format which the function likes.</p>
+<pre class="r"><code># first, join secchi data, Kz data and thermocline data for plotting
+# change variable names to match plotting function 
+# might be nicer to have this as an input to the function
+
+wt.months.Kz.secchi &lt;- left_join(secchi.months, wt.months.Kz) %&gt;%
+  rename(depth = upperZ) %&gt;%
+  left_join(meta.months)</code></pre>
+<pre><code>Joining, by = &quot;datetime&quot;
+Joining, by = &quot;datetime&quot;</code></pre>
+<pre class="r"><code>wt.weeks.Kz.secchi &lt;- left_join(secchi.weeks, wt.weeks.Kz) %&gt;% 
+  rename(depth = upperZ) %&gt;%
+  left_join(meta.weeks)</code></pre>
+<pre><code>Joining, by = &quot;datetime&quot;
+Joining, by = &quot;datetime&quot;</code></pre>
+<pre class="r"><code>wt.days.Kz.secchi &lt;- left_join(secchi.days, wt.days.Kz) %&gt;% 
+  rename(depth = upperZ) %&gt;%
+  left_join(meta.days)</code></pre>
+<pre><code>Joining, by = &quot;datetime&quot;
+Joining, by = &quot;datetime&quot;</code></pre>
+<pre class="r"><code>wt.3days.Kz.secchi &lt;- left_join(secchi.3days, wt.3days.Kz) %&gt;% 
+  rename(depth = upperZ) %&gt;%
+  left_join(meta.3days)</code></pre>
+<pre><code>Joining, by = &quot;datetime&quot;
+Joining, by = &quot;datetime&quot;</code></pre>
+<p>Now we can plot. Let’s look at a few months in 2016</p>
+<pre class="r"><code>plotKz(wt.months.Kz.secchi, startDate = &#39;2016-05-01&#39;,
+       endDate = &#39;2016-10-01&#39;, maxDepth = 11, 
+       plot.euphotic = TRUE, plot.secchi = FALSE)</code></pre>
+<pre><code>Warning in self$trans$transform(x): NaNs produced</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="figure/vert_Mixing_Blelham.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -696,16 +893,17 @@ loaded via a namespace (and not attached):
 [13] reprex_2.0.1     evaluate_0.14    highr_0.9        httr_1.4.2      
 [17] pillar_1.6.4     rlang_0.4.12     readxl_1.3.1     rstudioapi_0.13 
 [21] whisker_0.4      callr_3.7.0      jquerylib_0.1.4  rmarkdown_2.11  
-[25] munsell_0.5.0    broom_0.7.10     compiler_4.1.1   httpuv_1.6.5    
-[29] modelr_0.1.8     xfun_0.28        pkgconfig_2.0.3  htmltools_0.5.2 
-[33] tidyselect_1.1.1 fansi_0.5.0      crayon_1.4.2     tzdb_0.2.0      
-[37] dbplyr_2.1.1     withr_2.4.2      later_1.3.0      grid_4.1.1      
-[41] jsonlite_1.7.2   gtable_0.3.0     lifecycle_1.0.1  DBI_1.1.1       
-[45] git2r_0.29.0     magrittr_2.0.1   cli_3.1.0        stringi_1.7.5   
-[49] fs_1.5.0         promises_1.2.0.1 xml2_1.3.2       ellipsis_0.3.2  
-[53] generics_0.1.1   vctrs_0.3.8      tools_4.1.1      glue_1.5.0      
-[57] hms_1.1.1        processx_3.5.2   fastmap_1.1.0    yaml_2.2.1      
-[61] colorspace_2.0-2 rvest_1.0.2      knitr_1.36       haven_2.4.3     </code></pre>
+[25] labeling_0.4.2   munsell_0.5.0    broom_0.7.10     compiler_4.1.1  
+[29] httpuv_1.6.5     modelr_0.1.8     xfun_0.28        pkgconfig_2.0.3 
+[33] htmltools_0.5.2  tidyselect_1.1.1 fansi_0.5.0      crayon_1.4.2    
+[37] tzdb_0.2.0       dbplyr_2.1.1     withr_2.4.2      later_1.3.0     
+[41] grid_4.1.1       jsonlite_1.7.2   gtable_0.3.0     lifecycle_1.0.1 
+[45] DBI_1.1.1        git2r_0.29.0     magrittr_2.0.1   cli_3.1.0       
+[49] stringi_1.7.5    farver_2.1.0     fs_1.5.0         promises_1.2.0.1
+[53] xml2_1.3.2       ellipsis_0.3.2   generics_0.1.1   vctrs_0.3.8     
+[57] tools_4.1.1      glue_1.5.0       hms_1.1.1        processx_3.5.2  
+[61] fastmap_1.1.0    yaml_2.2.1       colorspace_2.0-2 rvest_1.0.2     
+[65] knitr_1.36       haven_2.4.3     </code></pre>
 </div>
 </div>
 
