@@ -1,0 +1,95 @@
+---
+title: "vert_Mixing_Blelham"
+author: "Daniel"
+date: "2022-02-03"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+Just going to see if I can run some of my vertical mixing code on this website.
+
+Many of the vertical mixing functions used are defined in 
+`analysis/vert_mixing_functions.R`. I will try to mention which these are.
+
+Load functions:
+
+```{r message = FALSE, warning = FALSE}
+source('analysis/vert_mixing_functions.R')
+```
+
+Load in the data!
+Note that raw data will not be uploaded to Github. 
+However, graphs produced from this data will appear on this website
+(need to do some thinking about data acknowledgement and licensing
+as this website is public)
+
+```{r}
+############## READ DATA ################
+
+waterDF = read.csv("Data/WT_total.csv")
+
+waterDF_dt <- waterDF %>%
+  mutate(DateTime=dmy_hm(DateTime)) %>%
+  rename(datetime=DateTime) # convert dates to datetime type
+
+# change names to "wtr_x" format
+names(waterDF_dt)[2:13] = paste0("wtr_", 
+                                 str_split_fixed(names(waterDF_dt)[2:13],
+                                                 '_', 2)[, 2])
+
+head(waterDF_dt)
+
+```
+
+Now we will do some time averaging of the data using my function `time_avg()`.
+
+```{r}
+########### TIME AVERAGING ##################
+
+wt.months = time_avg(waterDF_dt, period='1 month')
+wt.weeks = time_avg(waterDF_dt, period='1 week')
+wt.days = time_avg(waterDF_dt, period='1 day')
+wt.3days = time_avg(waterDF_dt, period='3 day')
+
+head(wt.3days)
+```
+
+Now, we need to load in the bathymetry.
+```{r}
+# can approximate bathymetry based on depth and area
+bathys = approx.bathy(14.5, 100000)
+# need to change name of areas column for some Rlakeanalyser stuff to work
+names(bathys)[2] = "areas" 
+
+# BUT better to use bathymetry file, which is more representative! 
+blelBathy = load.bathy("Data/bathy.csv")
+```
+
+Let's plot the water temperature profiles for the summer of 2013.
+
+```{r}
+wtr.heat.map(subset(wt.weeks, 
+                    datetime <='2013-10-01' & datetime >='2013-04-01'))
+```
+
+
+Now, we will use my `calcKz()` function to calculate the vertical diffusivity
+coefficients for different time averages. 
+
+__Note:__ It might be a good idea to display some of the `calcKz()` code, and other
+key functions somewhere on this website.
+
+```{r}
+# remember to use a subset of the data if this code needs to be run often
+wt.months.Kz = calcKz(wt.months, blelBathy, Zmax = 14.5)
+wt.weeks.Kz = calcKz(wt.weeks, blelBathy, Zmax = 14.5)
+wt.days.Kz = calcKz(wt.days, blelBathy, Zmax = 14.5)
+wt.3days.Kz = calcKz(wt.3days, blelBathy, Zmax = 14.5)
+```
+
+
+
+
