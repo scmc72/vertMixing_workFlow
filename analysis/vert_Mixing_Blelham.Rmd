@@ -7,7 +7,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Introduction
+## Setup
 
 Just going to see if I can run some of my vertical mixing code on this website.
 
@@ -20,7 +20,7 @@ Load functions:
 source('analysis/vert_mixing_functions.R')
 ```
 
-Load in the data!
+# Load in the data
 Note that raw data will not be uploaded to Github. 
 However, graphs produced from this data will appear on this website
 (need to do some thinking about data acknowledgement and licensing
@@ -29,7 +29,7 @@ as this website is public)
 ```{r}
 ############## READ DATA ################
 
-waterDF = read.csv("Data/WT_total.csv")
+waterDF = read.csv("data/WT_total.csv")
 
 waterDF_dt <- waterDF %>%
   mutate(DateTime=dmy_hm(DateTime)) %>%
@@ -68,6 +68,8 @@ names(bathys)[2] = "areas"
 blelBathy = load.bathy("Data/bathy.csv")
 ```
 
+# Basic visualisation
+
 Let's plot the water temperature profiles for the summer of 2013.
 
 ```{r}
@@ -76,13 +78,15 @@ wtr.heat.map(subset(wt.weeks,
 ```
 
 
+# Kz and heat flux calculation
+
 Now, we will use my `calcKz()` function to calculate the vertical diffusivity
 coefficients for different time averages. 
 
 __Note:__ It might be a good idea to display some of the `calcKz()` code, and other
 key functions somewhere on this website.
 
-```{r}
+```{r message = FALSE, warning = FALSE}
 # remember to use a subset of the data if this code needs to be run often
 wt.months.Kz = calcKz(wt.months, blelBathy, Zmax = 14.5)
 wt.weeks.Kz = calcKz(wt.weeks, blelBathy, Zmax = 14.5)
@@ -90,6 +94,204 @@ wt.days.Kz = calcKz(wt.days, blelBathy, Zmax = 14.5)
 wt.3days.Kz = calcKz(wt.3days, blelBathy, Zmax = 14.5)
 ```
 
+Can also calculate heatflux:
+```{r message = FALSE, warning = FALSE}
+wt.months.heatflux = ts.heat.flux(wt.months.Kz, wt.months, blelBathy, Zmax=14.5)
+wt.weeks.heatflux = ts.heat.flux(wt.weeks.Kz, wt.weeks, blelBathy, Zmax=14.5)
+wt.days.heatflux = ts.heat.flux(wt.days.Kz, wt.days, blelBathy, Zmax=14.5)
+wt.3days.heatflux = ts.heat.flux(wt.3days.Kz, wt.3days, blelBathy, Zmax=14.5)
+```
+
+# Calculating other important parameters
+
+For plots it will be nice to display where the metalimnion is and
+to what depth sunlight will penetrate (euphotic depth)
+
+Calculate metalimnion depths:
+```{r}
+
+################ METALIMNION CALCULATION #####################
+# just using R lake analyser function as is for this calculation
+# could try messing with slope, but I don't see any reason for this
+# outputs timeseries with columns 'top' (top of metalimnion - depth of epilimnion) 
+# and bottom (bottom of metalimnion - start of hypolimnion) 
+meta.months = ts.meta.depths(wt.months)
+meta.weeks = ts.meta.depths(wt.weeks)
+meta.3days = ts.meta.depths(wt.3days)
+meta.days = ts.meta.depths(wt.days)
+```
+
+Here we load Secchi depth data and then use this to estimate the euphotic depth.
+
+the light extinction coefficient, $K_d$, is calculated using the approach from
+[Woolway, 2015](https://www.tandfonline.com/doi/abs/10.5268/IW-5.2.748):
+
+$K_d = \frac{1.75}{Z_{sd}}$
+
+, where $Z_{sd}$ is the secchi depth. The light intensity at depth $z$, $I_z$
+is given by:
+
+$I_z = I_0 e^{-K_d z}$
+
+The euphotic depth is defined as the depth where the light intensity is
+1% of the light intensity at the surface. This can be written:
+
+$I_{z_{eu}} = 0.01 I_0$
+
+therefore, if we insert this into the previous equation and rearrange, we get:
+
+$z_{eu} = \frac{\ln{100}}{K_d}$
+
+which is used in the code chunk below:
+
+```{r}
 
 
+############## LOAD SECCHI DEPTH DATA #####################
+# want to load secchi depth data and calc euphotic depth from this
+secchi_DF = read.csv("Data/BLEL_Secchi.csv")
+
+############### EUPHOTIC DEPTH CALCULATION ##################
+secchi_DF_Kd <- secchi_DF %>%
+  mutate(Date=dmy(Date)) %>%
+  rename(datetime=Date) %>% # convert dates to datetime type
+  # calc Kd (light extinction coeff) using formula from Woolway, 2015
+  mutate(Kd=1.75/Secchidepth) %>%
+  # calc euphotic depth, the way it works is as follows:
+  # I(z) = I(0) exp(-Kd z)
+  # I(z_eup) = 0.01I(0)
+  # so, ln(0.01I(0)) = ln(I(0)) - Kd z_eup
+  # then rearrange to get, z_eup = ln100 / Kd
+  mutate(euphoticDepth=log(100)/Kd)
+
+############# RESAMPLE SECCHI DEPTH DATA ###################
+secchi.days = upsample_ts(secchi_DF_Kd, period='1 day')
+secchi.3days = upsample_ts(secchi_DF_Kd, period='3 day', start = '2016-05-04')
+secchi.weeks = upsample_ts(secchi_DF_Kd, period = '1 week', start='2016-05-09')
+# better to use time_avg for months as it will allow for starting on 2015-05-01
+secchi.months = time_avg(secchi_DF_Kd, period = '1 month')
+```
+
+# Plotting
+
+Seeing as we'll do this a few times, here is a function to plot $K_z$.
+It does a bunch of clever stuff and can even plot lines for the thermocline etc!
+
+```{r}
+########################## PLOTTING ####################
+# probably need to do weekly or monthly avgs before plotting
+
+plotKz <- function(kzDF_tidy, minDepth=NA, maxDepth=NA,
+                   startDate=NA, endDate=NA,
+                   plot.secchi=TRUE, plot.euphotic=TRUE, 
+                   plot.thermocline=TRUE){
+  # plot Kz graphs for each timestep in kzDF_tidy
+  # inputs:
+  # - kzDF_tidy: dataframe containing Kz values at different depths
+  #              data should be in long format (use pivot_longer_wtrDF)
+  #              needs to have columns: datetime, Kz, depth
+  # - minDepth, maxDepth: min and max depths to include in plot
+  # - startDate, endDate: date range to plot over (eg. startDate = '2013-05-17')
+  #                       if not specified then plot all dates
+  # - plot.secchi, plot.euphotic, plot.thermocline: 
+  #        booleans to indicate whether to plot horizontal lines for these
+  #        depths (requires these to be included as columns in input dataframe
+  #        called: 'Secchidepth', 'euphoticDepth', 'top', 'bottom')
+  
+  if(is.na(startDate)){
+    startDate = min(kzDF_tidy$datetime)
+  }
+  if(is.na(endDate)){
+    endDate = max(kzDF_tidy$datetime)
+  }
+  if(is.na(minDepth)){
+    minDepth = min(kzDF_tidy$depth)
+  }
+  if(is.na(maxDepth)){
+    maxDepth = max(kzDF_tidy$depth)
+  }
+  # create labels and line colors
+  # (see note further down for how the order of values in labs and colors works)
+  labs = c('Kz')
+  colors = c('#000000')
+  if(plot.secchi){
+    labs = c(labs, 'Secchi Depth')
+    colors = c(colors, '#31A016')
+  }
+  if(plot.euphotic){
+    labs = c(labs, 'Euphotic Depth')
+    colors = c(colors, '#E69F00')
+  }
+  if(plot.thermocline){
+    labs = c(labs, 'Top of thermocline', 'Bottom of thermocline')
+    colors = c(colors, '#E61313', '#56B4E9')
+  }
+  
+  kzDF_tidy <- subset(kzDF_tidy, 
+         depth <= maxDepth &
+           depth >= minDepth & 
+           (datetime) >= startDate &
+           (datetime) <= endDate)
+  # for the labels I've done something kinda hacky, but it works
+  # basically the order of labels is done alphabetically, so I've just set the 
+  # color param col = 'a', 'b', 'c' etc. Then I use scale_color_manual to edit 
+  # these labels, and their corresponding colors. the order of the labels just 
+  # needs to match the a, b, c, etc. 
+  ggplot(kzDF_tidy, 
+         aes(x = (Kz), y = depth)) + 
+    geom_path(aes(col='a')) +
+    scale_x_log10(#limits = c(10^-4, 10^0), 
+      breaks = trans_breaks("log10", function(x) 10^x),
+      labels = trans_format("log10", math_format(10^.x))) +
+    scale_y_reverse() +
+    xlab(expression("Kz (m"^2*"/s)")) +
+    ylab("Depth (m)") +
+    {if('Secchidepth' %in% colnames(kzDF_tidy) & plot.secchi)
+      geom_hline(data = kzDF_tidy, 
+                 aes(yintercept=Secchidepth, col='b'))} +
+    {if('euphoticDepth' %in% colnames(kzDF_tidy) & plot.euphotic)
+      geom_hline(data = kzDF_tidy, 
+                 aes(yintercept=euphoticDepth, col='c'))} +
+    {if('top' %in% colnames(kzDF_tidy) & plot.thermocline)
+      geom_hline(data = kzDF_tidy, 
+                 aes(yintercept=top, col='d'))} +
+    {if('bottom' %in% colnames(kzDF_tidy) & plot.thermocline)
+      geom_hline(data = kzDF_tidy, 
+                 aes(yintercept=bottom, col='e'))} +
+      scale_color_manual(name=NULL, values=colors, labels=labs) +
+      facet_wrap(vars(datetime))
+    
+}
+```
+
+Before plotting, we need to first get into a format which the function likes.
+
+```{r}
+# first, join secchi data, Kz data and thermocline data for plotting
+# change variable names to match plotting function 
+# might be nicer to have this as an input to the function
+
+wt.months.Kz.secchi <- left_join(secchi.months, wt.months.Kz) %>%
+  rename(depth = upperZ) %>%
+  left_join(meta.months)
+wt.weeks.Kz.secchi <- left_join(secchi.weeks, wt.weeks.Kz) %>% 
+  rename(depth = upperZ) %>%
+  left_join(meta.weeks)
+wt.days.Kz.secchi <- left_join(secchi.days, wt.days.Kz) %>% 
+  rename(depth = upperZ) %>%
+  left_join(meta.days)
+wt.3days.Kz.secchi <- left_join(secchi.3days, wt.3days.Kz) %>% 
+  rename(depth = upperZ) %>%
+  left_join(meta.3days)
+
+
+```
+
+Now we can plot. Let's look at a few months in 2016
+
+```{r}
+plotKz(wt.months.Kz.secchi, startDate = '2016-05-01',
+       endDate = '2016-10-01', maxDepth = 11, 
+       plot.euphotic = TRUE, plot.secchi = FALSE)
+```
 
