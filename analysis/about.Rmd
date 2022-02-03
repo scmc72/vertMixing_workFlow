@@ -7,4 +7,4 @@ editor_options:
   chunk_output_type: console
 ---
 
-Describe your project.
+This is the first project that I'm doing with `workflowr`. So far I like it.
