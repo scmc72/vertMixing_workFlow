@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Daniel" />
 
+<meta name="date" content="2022-02-04" />
 
-<title>Home</title>
+<title>vert_mixing_functions</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +31,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -230,6 +235,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -237,6 +305,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -280,7 +358,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">vert_mixing_functions</h1>
+<h4 class="author">Daniel</h4>
+<h4 class="date">2022-02-04</h4>
 
 </div>
 
@@ -308,7 +388,7 @@ $(document).ready(function () {
 <strong>Last updated:</strong> 2022-02-04
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>vertMixing_workFlow/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -330,6 +410,66 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
 <p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220203code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220203)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220203code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220203)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
@@ -378,7 +518,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/vert_mixing_functions.Rmd</code>) and HTML (<code>docs/vert_mixing_functions.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -404,87 +544,19 @@ Message
 <tbody>
 <tr>
 <td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/scmc72/vertMixing_workFlow/9f7e7c72ca8cf613065e4fdd5af2eaabbd5ba4be/docs/index.html" target="_blank">9f7e7c7</a>
-</td>
-<td>
-Daniel
-</td>
-<td>
-2022-02-03
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
 Rmd
 </td>
 <td>
-<a href="https://github.com/scmc72/vertMixing_workFlow/blob/d5fe2c9924d532fdc4cdb5d3c0fd279a086e1e38/analysis/index.Rmd" target="_blank">d5fe2c9</a>
+<a href="https://github.com/scmc72/vertMixing_workFlow/blob/b5ec1c5cd9a2e8d95fc6f0c67d1579841150f953/analysis/vert_mixing_functions.Rmd" target="_blank">b5ec1c5</a>
 </td>
 <td>
 Daniel
 </td>
 <td>
-2022-02-03
+2022-02-04
 </td>
 <td>
-added analysis file with some blelham calculations
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/scmc72/vertMixing_workFlow/ed490e09b83c5fca7334c23a7b43f5423a50b2bc/docs/index.html" target="_blank">ed490e0</a>
-</td>
-<td>
-Daniel
-</td>
-<td>
-2022-02-03
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/scmc72/vertMixing_workFlow/blob/d064ce2c9b686d98f2cdb6a9d70e1f0bc2693495/analysis/index.Rmd" target="_blank">d064ce2</a>
-</td>
-<td>
-Daniel
-</td>
-<td>
-2022-02-03
-</td>
-<td>
-publish initial files!
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/scmc72/vertMixing_workFlow/blob/36778959f08db65d991aa38d7971e843c694aa9c/analysis/index.Rmd" target="_blank">3677895</a>
-</td>
-<td>
-Daniel
-</td>
-<td>
-2022-02-03
-</td>
-<td>
-Start workflowr project.
+added some notes about how to present functions
 </td>
 </tr>
 </tbody>
@@ -494,8 +566,62 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p><em>Welcome</em> to my <em>research</em> website.</p>
-<p>Click on this <a href="vert_Mixing_Blelham.html">link</a> to see my results.</p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>All the custom vertical mixing functions are located in <code>analysis/vert_mixing_functions.R</code>. This document simply serves as a way to present some of the code which these are built with.</p>
+</div>
+<div id="some-thoughts" class="section level1">
+<h1>Some thoughts…</h1>
+<p>Interestingly, I’m having a bit of a dilemma about how to approach this! I’ll try to write this down here as I think getting this right here will pay off for future <code>workflowr</code> projects.</p>
+<p>So, by “hiding” all of the functions in a separate file which isn’t easily viewable from the main webpage, I feel like I’m almost defeating the point of displaying any code at all. In my opinion, the code which I’m displaying is highly trivial - basically just calls to the functions which do all the work.</p>
+<p>I feel like I want to show the functions I have written! I want this to be easily digestible by someone who maybe doesn’t spend that much time in R, but who understands the maths and science of what I’m doing well.</p>
+<p>So what’s the best approach?</p>
+<ul>
+<li>One approach is to simply copy sections of the code into an <code>.Rmd</code> file, but this means that if I change the source functions, then this part will be out of date! - not good.</li>
+<li>Alternatively you can use <code>{r, code = readLines("external.R")}</code> at the start of a code chunk to display the entire file. There are ways to display a selection of lines, but this feels clumsy and may end up displaying the wrong section if I change the file and forget to update the lines.</li>
+<li>I could just write all my functions in an <code>.Rmd</code> file, but this seems to go against the examples I’ve seen!</li>
+<li>need to think more about this!</li>
+</ul>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.1 (2021-08-10)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19044)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United Kingdom.1252 
+[2] LC_CTYPE=English_United Kingdom.1252   
+[3] LC_MONETARY=English_United Kingdom.1252
+[4] LC_NUMERIC=C                           
+[5] LC_TIME=English_United Kingdom.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] workflowr_1.7.0
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.7       pillar_1.6.4     compiler_4.1.1   later_1.3.0     
+ [5] git2r_0.29.0     jquerylib_0.1.4  tools_4.1.1      getPass_0.2-2   
+ [9] digest_0.6.28    evaluate_0.14    lifecycle_1.0.1  tibble_3.1.6    
+[13] pkgconfig_2.0.3  rlang_0.4.12     rstudioapi_0.13  yaml_2.2.1      
+[17] xfun_0.28        fastmap_1.1.0    httr_1.4.2       stringr_1.4.0   
+[21] knitr_1.36       fs_1.5.0         vctrs_0.3.8      rprojroot_2.0.2 
+[25] glue_1.5.0       R6_2.5.1         processx_3.5.2   fansi_0.5.0     
+[29] rmarkdown_2.11   callr_3.7.0      magrittr_2.0.1   whisker_0.4     
+[33] ps_1.6.0         promises_1.2.0.1 ellipsis_0.3.2   htmltools_0.5.2 
+[37] httpuv_1.6.5     utf8_1.2.2       stringi_1.7.5    crayon_1.4.2    </code></pre>
+</div>
+</div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
@@ -513,6 +639,8 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -545,6 +673,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
