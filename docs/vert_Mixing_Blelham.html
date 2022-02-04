@@ -385,7 +385,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-02-03
+<strong>Last updated:</strong> 2022-02-04
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -476,16 +476,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomscmc72vertMixingworkFlowtree8f17f019f7820ee54972bc13efa1ac1825433e16targetblank8f17f01a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/scmc72/vertMixing_workFlow/tree/8f17f019f7820ee54972bc13efa1ac1825433e16" target="_blank">8f17f01</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomscmc72vertMixingworkFlowtreeab9981a2492879fb7c5d10248ddc46f96fdd5fe4targetblankab9981aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/scmc72/vertMixing_workFlow/tree/ab9981a2492879fb7c5d10248ddc46f96fdd5fe4" target="_blank">ab9981a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomscmc72vertMixingworkFlowtree8f17f019f7820ee54972bc13efa1ac1825433e16targetblank8f17f01a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomscmc72vertMixingworkFlowtreeab9981a2492879fb7c5d10248ddc46f96fdd5fe4targetblankab9981aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/scmc72/vertMixing_workFlow/tree/8f17f019f7820ee54972bc13efa1ac1825433e16" target="_blank">8f17f01</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/scmc72/vertMixing_workFlow/tree/ab9981a2492879fb7c5d10248ddc46f96fdd5fe4" target="_blank">ab9981a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -537,6 +537,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/scmc72/vertMixing_workFlow/blob/ab9981a2492879fb7c5d10248ddc46f96fdd5fe4/analysis/vert_Mixing_Blelham.Rmd" target="_blank">ab9981a</a>
+</td>
+<td>
+Dan-ub
+</td>
+<td>
+2022-02-04
+</td>
+<td>
+added weekly plots and corrected data pathname
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/scmc72/vertMixing_workFlow/507bec8921e326ab389ddd4b7b1a418144c155c3/docs/vert_Mixing_Blelham.html" target="_blank">507bec8</a>
+</td>
+<td>
+Daniel
+</td>
+<td>
+2022-02-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -663,7 +697,7 @@ bathys = approx.bathy(14.5, 100000)
 names(bathys)[2] = &quot;areas&quot; 
 
 # BUT better to use bathymetry file, which is more representative! 
-blelBathy = load.bathy(&quot;Data/bathy.csv&quot;)</code></pre>
+blelBathy = load.bathy(&quot;data/bathy.csv&quot;)</code></pre>
 </div>
 <div id="basic-visualisation" class="section level1">
 <h1>Basic visualisation</h1>
@@ -671,6 +705,43 @@ blelBathy = load.bathy(&quot;Data/bathy.csv&quot;)</code></pre>
 <pre class="r"><code>wtr.heat.map(subset(wt.weeks, 
                     datetime &lt;=&#39;2013-10-01&#39; &amp; datetime &gt;=&#39;2013-04-01&#39;))</code></pre>
 <p><img src="figure/vert_Mixing_Blelham.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/scmc72/vertMixing_workFlow/blob/9f7e7c72ca8cf613065e4fdd5af2eaabbd5ba4be/docs/figure/vert_Mixing_Blelham.Rmd/unnamed-chunk-5-1.png" target="_blank">9f7e7c7</a>
+</td>
+<td>
+Daniel
+</td>
+<td>
+2022-02-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="kz-and-heat-flux-calculation" class="section level1">
 <h1>Kz and heat flux calculation</h1>
@@ -712,7 +783,7 @@ meta.days = ts.meta.depths(wt.days)</code></pre>
 <p>which is used in the code chunk below:</p>
 <pre class="r"><code>############## LOAD SECCHI DEPTH DATA #####################
 # want to load secchi depth data and calc euphotic depth from this
-secchi_DF = read.csv(&quot;Data/BLEL_Secchi.csv&quot;)
+secchi_DF = read.csv(&quot;data/BLEL_Secchi.csv&quot;)
 
 ############### EUPHOTIC DEPTH CALCULATION ##################
 secchi_DF_Kd &lt;- secchi_DF %&gt;%
@@ -828,25 +899,17 @@ plotKz &lt;- function(kzDF_tidy, minDepth=NA, maxDepth=NA,
 
 wt.months.Kz.secchi &lt;- left_join(secchi.months, wt.months.Kz) %&gt;%
   rename(depth = upperZ) %&gt;%
-  left_join(meta.months)</code></pre>
-<pre><code>Joining, by = &quot;datetime&quot;
-Joining, by = &quot;datetime&quot;</code></pre>
-<pre class="r"><code>wt.weeks.Kz.secchi &lt;- left_join(secchi.weeks, wt.weeks.Kz) %&gt;% 
+  left_join(meta.months)
+wt.weeks.Kz.secchi &lt;- left_join(secchi.weeks, wt.weeks.Kz) %&gt;% 
   rename(depth = upperZ) %&gt;%
-  left_join(meta.weeks)</code></pre>
-<pre><code>Joining, by = &quot;datetime&quot;
-Joining, by = &quot;datetime&quot;</code></pre>
-<pre class="r"><code>wt.days.Kz.secchi &lt;- left_join(secchi.days, wt.days.Kz) %&gt;% 
+  left_join(meta.weeks)
+wt.days.Kz.secchi &lt;- left_join(secchi.days, wt.days.Kz) %&gt;% 
   rename(depth = upperZ) %&gt;%
-  left_join(meta.days)</code></pre>
-<pre><code>Joining, by = &quot;datetime&quot;
-Joining, by = &quot;datetime&quot;</code></pre>
-<pre class="r"><code>wt.3days.Kz.secchi &lt;- left_join(secchi.3days, wt.3days.Kz) %&gt;% 
+  left_join(meta.days)
+wt.3days.Kz.secchi &lt;- left_join(secchi.3days, wt.3days.Kz) %&gt;% 
   rename(depth = upperZ) %&gt;%
   left_join(meta.3days)</code></pre>
-<pre><code>Joining, by = &quot;datetime&quot;
-Joining, by = &quot;datetime&quot;</code></pre>
-<p>Now we can plot. Let’s look at a few months in 2016</p>
+<p>Now we can plot. Let’s look at a few months in 2016. Notably, there are some data points where <span class="math inline">\(K_z\)</span> is negative. This produces <code>NaNs</code> following the log transform, and so these spurious values are not plotted. It can be seen that at the months scale this largely happens near the surface and sometimes near the bottom of the lake, indicating that it is near these boundaries where this <span class="math inline">\(K_z\)</span> estimation method fails.</p>
 <pre class="r"><code>plotKz(wt.months.Kz.secchi, startDate = &#39;2016-05-01&#39;,
        endDate = &#39;2016-10-01&#39;, maxDepth = 11, 
        plot.euphotic = TRUE, plot.secchi = FALSE)</code></pre>
@@ -854,6 +917,50 @@ Joining, by = &quot;datetime&quot;</code></pre>
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
 <p><img src="figure/vert_Mixing_Blelham.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/scmc72/vertMixing_workFlow/blob/507bec8921e326ab389ddd4b7b1a418144c155c3/docs/figure/vert_Mixing_Blelham.Rmd/unnamed-chunk-12-1.png" target="_blank">507bec8</a>
+</td>
+<td>
+Daniel
+</td>
+<td>
+2022-02-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can also produce plots for different time averaging schemes:</p>
+<p>Weeks:</p>
+<pre class="r"><code>plotKz(wt.weeks.Kz.secchi, startDate = &#39;2016-05-01&#39;, 
+       endDate = &#39;2016-08-22&#39;, maxDepth = 11, plot.secchi = FALSE)</code></pre>
+<pre><code>Warning in self$trans$transform(x): NaNs produced</code></pre>
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<p><img src="figure/vert_Mixing_Blelham.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -862,18 +969,21 @@ Joining, by = &quot;datetime&quot;</code></pre>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.1.1 (2021-08-10)
-Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 19044)
+<pre><code>R version 3.6.3 (2020-02-29)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.04.3 LTS
 
 Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
 
 locale:
-[1] LC_COLLATE=English_United Kingdom.1252 
-[2] LC_CTYPE=English_United Kingdom.1252   
-[3] LC_MONETARY=English_United Kingdom.1252
-[4] LC_NUMERIC=C                           
-[5] LC_TIME=English_United Kingdom.1252    
+ [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8    
+ [5] LC_MONETARY=en_GB.UTF-8    LC_MESSAGES=en_GB.UTF-8   
+ [7] LC_PAPER=en_GB.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
@@ -882,28 +992,28 @@ other attached packages:
  [1] zoo_1.8-9              gridExtra_2.3          scales_1.1.1          
  [4] reshape2_1.4.4         lubridate_1.8.0        forcats_0.5.1         
  [7] stringr_1.4.0          dplyr_1.0.7            purrr_0.3.4           
-[10] readr_2.1.0            tidyr_1.1.4            tibble_3.1.6          
+[10] readr_2.0.2            tidyr_1.1.4            tibble_3.1.5          
 [13] ggplot2_3.3.5          tidyverse_1.3.1        rLakeAnalyzer_1.11.4.1
 [16] workflowr_1.7.0       
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.7       lattice_0.20-45  getPass_0.2-2    ps_1.6.0        
- [5] assertthat_0.2.1 rprojroot_2.0.2  digest_0.6.28    utf8_1.2.2      
- [9] plyr_1.8.6       R6_2.5.1         cellranger_1.1.0 backports_1.3.0 
-[13] reprex_2.0.1     evaluate_0.14    highr_0.9        httr_1.4.2      
-[17] pillar_1.6.4     rlang_0.4.12     readxl_1.3.1     rstudioapi_0.13 
-[21] whisker_0.4      callr_3.7.0      jquerylib_0.1.4  rmarkdown_2.11  
-[25] labeling_0.4.2   munsell_0.5.0    broom_0.7.10     compiler_4.1.1  
-[29] httpuv_1.6.5     modelr_0.1.8     xfun_0.28        pkgconfig_2.0.3 
-[33] htmltools_0.5.2  tidyselect_1.1.1 fansi_0.5.0      crayon_1.4.2    
-[37] tzdb_0.2.0       dbplyr_2.1.1     withr_2.4.2      later_1.3.0     
-[41] grid_4.1.1       jsonlite_1.7.2   gtable_0.3.0     lifecycle_1.0.1 
-[45] DBI_1.1.1        git2r_0.29.0     magrittr_2.0.1   cli_3.1.0       
-[49] stringi_1.7.5    farver_2.1.0     fs_1.5.0         promises_1.2.0.1
-[53] xml2_1.3.2       ellipsis_0.3.2   generics_0.1.1   vctrs_0.3.8     
-[57] tools_4.1.1      glue_1.5.0       hms_1.1.1        processx_3.5.2  
-[61] fastmap_1.1.0    yaml_2.2.1       colorspace_2.0-2 rvest_1.0.2     
-[65] knitr_1.36       haven_2.4.3     </code></pre>
+ [1] httr_1.4.2       sass_0.4.0       jsonlite_1.7.2   modelr_0.1.8    
+ [5] bslib_0.3.1      assertthat_0.2.1 getPass_0.2-2    highr_0.9       
+ [9] cellranger_1.1.0 yaml_2.2.1       pillar_1.6.3     backports_1.2.1 
+[13] lattice_0.20-40  glue_1.4.2       digest_0.6.28    promises_1.2.0.1
+[17] rvest_1.0.1      colorspace_2.0-2 htmltools_0.5.2  httpuv_1.6.3    
+[21] plyr_1.8.6       pkgconfig_2.0.3  broom_0.7.9      haven_2.4.3     
+[25] processx_3.5.2   whisker_0.4      later_1.3.0      tzdb_0.1.2      
+[29] git2r_0.29.0     generics_0.1.0   farver_2.1.0     ellipsis_0.3.2  
+[33] withr_2.4.2      cli_3.0.1        magrittr_2.0.1   crayon_1.4.1    
+[37] readxl_1.3.1     evaluate_0.14    ps_1.6.0         fs_1.5.0        
+[41] fansi_0.5.0      xml2_1.3.2       tools_3.6.3      hms_1.1.1       
+[45] lifecycle_1.0.1  munsell_0.5.0    reprex_2.0.1     callr_3.7.0     
+[49] compiler_3.6.3   jquerylib_0.1.4  rlang_0.4.11     grid_3.6.3      
+[53] rstudioapi_0.13  labeling_0.4.2   rmarkdown_2.11   gtable_0.3.0    
+[57] DBI_1.1.1        R6_2.5.1         knitr_1.36       fastmap_1.1.0   
+[61] utf8_1.2.2       rprojroot_2.0.2  stringi_1.7.5    Rcpp_1.0.7      
+[65] vctrs_0.3.8      dbplyr_2.1.1     tidyselect_1.1.1 xfun_0.26       </code></pre>
 </div>
 </div>
 
