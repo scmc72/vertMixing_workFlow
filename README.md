@@ -1,6 +1,12 @@
-# vertMixing_workFlow
+# Vertical Mixing Project
 
-A [workflowr][] project.
+This project studies some data from Blelham Tarn by calculating
+vertical diffusion coefficients from temperature profile data. 
+
+The website can be be found [here](https://scmc72.github.io/vertMixing_workFlow/)
+
+
+This is a [workflowr][] project.
 
 [workflowr]: https://github.com/workflowr/workflowr
 
