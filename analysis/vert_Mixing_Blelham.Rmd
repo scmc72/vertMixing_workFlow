@@ -94,7 +94,7 @@ wt.days.Kz = calcKz(wt.days, blelBathy, Zmax = 14.5)
 wt.3days.Kz = calcKz(wt.3days, blelBathy, Zmax = 14.5)
 ```
 
-Can also calculate heatflux:
+Can also calculate heat flux, $j$,:
 ```{r message = FALSE, warning = FALSE}
 wt.months.heatflux = ts.heat.flux(wt.months.Kz, wt.months, blelBathy, Zmax=14.5)
 wt.weeks.heatflux = ts.heat.flux(wt.weeks.Kz, wt.weeks, blelBathy, Zmax=14.5)
@@ -287,6 +287,8 @@ wt.3days.Kz.secchi <- left_join(secchi.3days, wt.3days.Kz) %>%
 
 ```
 
+# Plotting $K_z$
+
 Now we can plot. Let's look at a few months in 2016. 
 Notably, there are some data points where $K_z$ is negative. 
 This produces `NaNs` following the log transform, and so these spurious values 
@@ -309,4 +311,160 @@ Weeks:
 plotKz(wt.weeks.Kz.secchi, startDate = '2016-05-01', 
        endDate = '2016-08-22', maxDepth = 11, plot.secchi = FALSE)
 ```
+
+3 days:
+
+```{r}
+plotKz(wt.3days.Kz.secchi, startDate = '2016-05-10', 
+       endDate = '2016-06-24', maxDepth = 11, plot.secchi = FALSE)
+```
+
+days:
+
+```{r}
+plotKz(wt.days.Kz.secchi, startDate = '2016-06-07', 
+       endDate = '2016-06-22', maxDepth = 11, plot.secchi = FALSE)
+```
+
+# Plotting heat flux
+
+The heat flux, $j$, can also be plotted. For this a similar plotting
+function is defined.
+
+```{r}
+################ PLOT HEAT FLUX ##############################
+# this function is so similar to plotKz that I could actually just combine the
+# 2 and have inputs which specify the variable names to plot and labels etc.
+# but currently less work to just have 2 functions with very similar behaviour
+plotHeatFlux <- function(heat.flux, minDepth=NA, maxDepth=NA,
+                         startDate=NA, endDate=NA,
+                         plot.secchi=TRUE, plot.euphotic=TRUE, 
+                         plot.thermocline=TRUE){
+  # plot heatflux graphs for each timestep in heat.flux
+  # inputs:
+  # - heat.flux: dataframe containing heatflux (j) values at different depths
+  #              data should be in long format (eg. from ts.heat.flux)
+  #              needs to have columns: datetime, j, depth
+  # - minDepth, maxDepth: min and max depths to include in plot
+  # - startDate, endDate: date range to plot over (eg. startDate = '2013-05-17')
+  #                       if not specified then plot all dates
+  # - plot.secchi, plot.euphotic, plot.thermocline: 
+  #        booleans to indicate whether to plot horizontal lines for these
+  #        depths (requires these to be included as columns in input dataframe
+  #        called: 'Secchidepth', 'euphoticDepth', 'top', 'bottom')
+  
+  if(is.na(startDate)){
+    startDate = min(heat.flux$datetime)
+  }
+  if(is.na(endDate)){
+    endDate = max(heat.flux$datetime)
+  }
+  if(is.na(minDepth)){
+    minDepth = min(heat.flux$depth)
+  }
+  if(is.na(maxDepth)){
+    maxDepth = max(heat.flux$depth)
+  }
+  # create labels and line colors
+  # (see note further down for how the order of values in labs and colors works)
+  labs = c('Heat Flux, j')
+  colors = c('#000000')
+  if(plot.secchi){
+    labs = c(labs, 'Secchi Depth')
+    colors = c(colors, '#31A016')
+  }
+  if(plot.euphotic){
+    labs = c(labs, 'Euphotic Depth')
+    colors = c(colors, '#E69F00')
+  }
+  if(plot.thermocline){
+    labs = c(labs, 'Top of thermocline', 'Bottom of thermocline')
+    colors = c(colors, '#E61313', '#56B4E9')
+  }
+  
+  heat.flux <- subset(heat.flux, 
+                      depth <= maxDepth &
+                        depth >= minDepth & 
+                        (datetime) >= startDate &
+                        (datetime) <= endDate)
+  # for the labels I've done something kinda hacky, but it works
+  # basically the order of labels is done alphabetically, so I've just set the 
+  # color param col = 'a', 'b', 'c' etc. Then I use scale_color_manual to edit 
+  # these labels, and their corresponding colors. the order of the labels just 
+  # needs to match the a, b, c, etc. 
+  ggplot(heat.flux, 
+         aes(x = (j), y = depth)) + 
+    geom_path(aes(col='a')) +
+    scale_y_reverse() +
+    xlab(expression("j (W/m"^2*")")) +
+    ylab("Depth (m)") +
+    {if('Secchidepth' %in% colnames(heat.flux) & plot.secchi)
+      geom_hline(data = heat.flux, 
+                 aes(yintercept=Secchidepth, col='b'))} +
+    {if('euphoticDepth' %in% colnames(heat.flux) & plot.euphotic)
+      geom_hline(data = heat.flux, 
+                 aes(yintercept=euphoticDepth, col='c'))} +
+    {if('top' %in% colnames(heat.flux) & plot.thermocline)
+      geom_hline(data = heat.flux, 
+                 aes(yintercept=top, col='d'))} +
+    {if('bottom' %in% colnames(heat.flux) & plot.thermocline)
+      geom_hline(data = heat.flux, 
+                 aes(yintercept=bottom, col='e'))} +
+    scale_color_manual(name=NULL, values=colors, labels=labs) +
+    facet_wrap(vars(datetime))
+}
+```
+
+Then we join the heat flux and secchi-derived data:
+
+```{r message=FALSE, warning=FALSE}
+
+# join heatflux and secchi derived data
+wt.months.j.secchi <- left_join(secchi.months, wt.months.heatflux) %>%
+  rename(depth = upperZ) %>%
+  left_join(meta.months)
+wt.weeks.j.secchi <- left_join(secchi.weeks, wt.weeks.heatflux) %>% 
+  rename(depth = upperZ) %>%
+  left_join(meta.weeks)
+wt.days.j.secchi <- left_join(secchi.days, wt.days.heatflux) %>% 
+  rename(depth = upperZ) %>%
+  left_join(meta.days)
+wt.3days.j.secchi <- left_join(secchi.3days, wt.3days.heatflux) %>% 
+  rename(depth = upperZ) %>%
+  left_join(meta.3days)
+```
+
+Now let's make some heat flux plots:
+
+months: at the start of summer (May, June), we see some high positive values of heat flux above the euphotic depth. Then in
+October, this is reversed, with high negative values of heat flux in the epilimnion. Notably, at this point, the epilimnion
+appears to be considerably deeper, such that the euphotic depth
+lies well above the metalimnion. 
+
+```{r}
+plotHeatFlux(wt.months.j.secchi, startDate = '2016-05-01',
+       endDate = '2016-10-01', plot.secchi = FALSE)
+```
+
+weeks:
+
+```{r}
+plotHeatFlux(wt.weeks.j.secchi, startDate = '2016-05-01', 
+       endDate = '2016-08-22', plot.secchi = FALSE)
+```
+
+3 days:
+
+```{r}
+plotHeatFlux(wt.days.j.secchi, startDate = '2016-06-07', 
+       endDate = '2016-06-22', plot.secchi = FALSE)
+```
+
+days:
+
+```{r}
+plotHeatFlux(wt.3days.j.secchi, startDate = '2016-05-10', 
+       endDate = '2016-06-24', plot.secchi = FALSE)
+```
+
 

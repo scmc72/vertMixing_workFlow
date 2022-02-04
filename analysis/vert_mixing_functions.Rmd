@@ -1,0 +1,50 @@
+---
+title: "vert_mixing_functions"
+author: "Daniel"
+date: "2022-02-04"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+All the custom vertical mixing functions are located in 
+`analysis/vert_mixing_functions.R`. This document simply serves as a way to 
+present some of the code which these are built with. 
+
+# Some thoughts...
+
+Interestingly, I'm having a bit of a dilemma about how to approach this!
+I'll try to write this down here as I think getting this right here will pay off
+for future `workflowr` projects.
+
+So, by "hiding" all of the functions in a separate file which isn't easily 
+viewable from the main webpage, I feel like I'm almost defeating the point of
+displaying any code at all. In my opinion, the code which I'm displaying is 
+highly trivial - basically just calls to the functions which do all the work.
+
+I feel like I want to show the functions I have written! I want this to be
+easily digestible by someone who maybe doesn't spend that much time in R, but
+who understands the maths and science of what I'm doing well. 
+
+So what's the best approach? 
+
+- One approach is to simply copy sections of the code
+into an `.Rmd` file, but this means that if I change the source functions, then
+this part will be out of date! - not good.
+- Alternatively you can use `{r, code = readLines("external.R")}` at the start 
+of a code chunk to display the entire file. There are ways to display a
+selection of lines, but this feels clumsy and may end up displaying the wrong 
+section if I change the file and forget to update the lines.
+- I could just write all my functions in an `.Rmd` file, but this seems
+to go against the examples I've seen!
+- need to think more about this!
+
+
+
+
+```{r}
+
+```
+
