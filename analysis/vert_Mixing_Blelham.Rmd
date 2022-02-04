@@ -65,7 +65,7 @@ bathys = approx.bathy(14.5, 100000)
 names(bathys)[2] = "areas" 
 
 # BUT better to use bathymetry file, which is more representative! 
-blelBathy = load.bathy("Data/bathy.csv")
+blelBathy = load.bathy("data/bathy.csv")
 ```
 
 # Basic visualisation
@@ -149,7 +149,7 @@ which is used in the code chunk below:
 
 ############## LOAD SECCHI DEPTH DATA #####################
 # want to load secchi depth data and calc euphotic depth from this
-secchi_DF = read.csv("Data/BLEL_Secchi.csv")
+secchi_DF = read.csv("data/BLEL_Secchi.csv")
 
 ############### EUPHOTIC DEPTH CALCULATION ##################
 secchi_DF_Kd <- secchi_DF %>%
@@ -266,7 +266,7 @@ plotKz <- function(kzDF_tidy, minDepth=NA, maxDepth=NA,
 
 Before plotting, we need to first get into a format which the function likes.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 # first, join secchi data, Kz data and thermocline data for plotting
 # change variable names to match plotting function 
 # might be nicer to have this as an input to the function
@@ -287,11 +287,26 @@ wt.3days.Kz.secchi <- left_join(secchi.3days, wt.3days.Kz) %>%
 
 ```
 
-Now we can plot. Let's look at a few months in 2016
+Now we can plot. Let's look at a few months in 2016. 
+Notably, there are some data points where $K_z$ is negative. 
+This produces `NaNs` following the log transform, and so these spurious values 
+are not plotted. It can be seen that at the months scale this largely happens 
+near the surface and sometimes near the bottom of the lake,
+indicating that it is near these boundaries where this $K_z$ estimation method
+fails.
 
 ```{r}
 plotKz(wt.months.Kz.secchi, startDate = '2016-05-01',
        endDate = '2016-10-01', maxDepth = 11, 
        plot.euphotic = TRUE, plot.secchi = FALSE)
+```
+
+We can also produce plots for different time averaging schemes:
+
+Weeks:
+
+```{r}
+plotKz(wt.weeks.Kz.secchi, startDate = '2016-05-01', 
+       endDate = '2016-08-22', maxDepth = 11, plot.secchi = FALSE)
 ```
 
